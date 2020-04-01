@@ -42,11 +42,14 @@ test -d "$SCRIPTLIB"
 
 if [[ $CSV -eq 1 ]]
 then 
-  printf "\"St\",\"Name\",\"Version\",\"Arch\",\"Description\",\"Licenses\"\n"
+  #printf "\"St\",\"Name\",\"Version\",\"Arch\",\"Description\",\"Licenses\"\n"
+  printf "\"St\",\"Name\",\"Licenses\"\n"
 else 
   format='%-2s  %-30s %-30s %-6s %-60s %s\n'
-  printf "$format" "St" "Name" "Version" "Arch" "Description" "Licenses"
-  printf "$format" "--" "----" "-------" "----" "-----------" "--------"
+  #printf "$format" "St" "Name" "Version" "Arch" "Description" "Licenses"
+  #printf "$format" "--" "----" "-------" "----" "-----------" "--------"
+  printf "$format" "St" "Name" "Licenses"
+  printf "$format" "--" "----" "--------"
 fi
 
 COLUMNS=2000 dpkg -l | grep '^.[iufhwt]' | while read pState package pVer pArch pDesc; do
@@ -66,7 +69,8 @@ COLUMNS=2000 dpkg -l | grep '^.[iufhwt]' | while read pState package pVer pArch 
   then
     printf "\"$pState\",\"$package\",\"$pVer\",\"$pArch\",\"$pDesc\",\"$license\"\n"
   else
-    printf "$format" "$pState" "${package:0:30}" "${pVer:0:30}" "${pArch:0:6}" "${pDesc:0:60}" "$license"
+    #printf "$format" "$pState" "${package:0:30}" "${pVer:0:30}" "${pArch:0:6}" "${pDesc:0:60}" "$license"
+    printf "$format" "$pState" "${package:0:30}" "$license"
   fi 
 done
 
